@@ -2,9 +2,14 @@
     "name": "simplycodedsoftware/integration-messaging-http",
     "license": "MIT",
     "type": "library",
-    "authors": [],
-    "keywords": [],
-    "description": "",
+    "authors": [
+        {
+            "name": "Dariusz Gafka",
+            "email": "dgafka.mail@gmail.com"
+        }
+    ],
+    "keywords": ["messaging", "asynchronous", "message", "spring", "enterprise integration patterns", "eip", "distributed architecture", "event driven architecture", "eda", "http", "web"],
+    "description": "Http module for integration messaging. Will provide you with HttpInboundGateway",
     "autoload": {
         "psr-4": {
             "SimplyCodedSoftware\\IntegrationMessaging\\Http\\": "src"
