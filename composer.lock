@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e0930ad4c6a9f43018760d11db3a8d52",
+    "content-hash": "e737b7b1189e1ef0bd54c7e11669d153",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -491,16 +491,16 @@
         },
         {
             "name": "simplycodedsoftware/integration-messaging",
-            "version": "0.0.4",
+            "version": "0.1.1",
             "source": {
                 "type": "git",
-                "url": "git@gitlab.com:dgafka/messaging.git",
-                "reference": "334581fc103d12308a18df644d2d138796b3113d"
+                "url": "https://github.com/SimplyCodedSoftware/integration-messaging.git",
+                "reference": "5cfe9d723494b398ebddfa2f38ac3f7fbff755dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://gitlab.com/api/v4/projects/dgafka%2Fmessaging/repository/archive.zip?sha=334581fc103d12308a18df644d2d138796b3113d",
-                "reference": "334581fc103d12308a18df644d2d138796b3113d",
+                "url": "https://api.github.com/repos/SimplyCodedSoftware/integration-messaging/zipball/5cfe9d723494b398ebddfa2f38ac3f7fbff755dd",
+                "reference": "5cfe9d723494b398ebddfa2f38ac3f7fbff755dd",
                 "shasum": ""
             },
             "require": {
@@ -520,13 +520,7 @@
                     "SimplyCodedSoftware\\IntegrationMessaging\\": "src"
                 }
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "Test\\SimplyCodedSoftware\\IntegrationMessaging\\": "tests/phpunit",
-                    "Behat\\Bootstrap\\": "tests/Behat/Bootstrap",
-                    "Fixture\\": "tests/Fixture"
-                }
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -536,7 +530,7 @@
                     "email": "dgafka.mail@gmail.com"
                 }
             ],
-            "description": "Framework to help you working in distributed architecture. Based on enterprise integration patterns and java spring framework.",
+            "description": "Framework to provide pipe and filters architecture and solutions to work in distributed architecture. Based on enterprise integration patterns and java spring framework.",
             "keywords": [
                 "asynchronous",
                 "distributed architecture",
@@ -548,7 +542,7 @@
                 "messaging",
                 "spring"
             ],
-            "time": "2018-02-17T18:18:03+00:00"
+            "time": "2018-02-18T20:40:01+00:00"
         },
         {
             "name": "zendframework/zend-code",

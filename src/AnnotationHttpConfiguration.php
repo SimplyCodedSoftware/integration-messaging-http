@@ -11,6 +11,7 @@ use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\ModuleConfigurati
 use SimplyCodedSoftware\IntegrationMessaging\Config\Configuration;
 use SimplyCodedSoftware\IntegrationMessaging\Config\ConfigurationVariableRetrievingService;
 use SimplyCodedSoftware\IntegrationMessaging\Config\ConfiguredMessagingSystem;
+use SimplyCodedSoftware\IntegrationMessaging\Handler\ReferenceSearchService;
 use SimplyCodedSoftware\IntegrationMessaging\Http\Annotation\FromMessageHeadersMapperAnnotation;
 use SimplyCodedSoftware\IntegrationMessaging\Http\Annotation\HttpInboundGatewayAnnotation;
 use SimplyCodedSoftware\IntegrationMessaging\Http\Annotation\MappedHeaderAnnotation;
@@ -100,8 +101,16 @@ class AnnotationHttpConfiguration implements AnnotationConfiguration
     /**
      * @inheritDoc
      */
+    public function configure(ReferenceSearchService $referenceSearchService): void
+    {
+        return;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function postConfigure(ConfiguredMessagingSystem $configuredMessagingSystem): void
     {
-        // TODO: Implement postConfigure() method.
+        return;
     }
 }
