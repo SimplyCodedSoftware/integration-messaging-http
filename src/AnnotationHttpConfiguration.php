@@ -66,7 +66,7 @@ class AnnotationHttpConfiguration implements AnnotationConfiguration
     {
         $annotationMessageEndpointConfigurationFinder = new AnnotationClassesWithMethodFinder($this->classLocator, $this->classMetadataReader);
 
-        $compositeFactory = new CompositeConverterFactory([]);
+        $compositeFactory = new CompositeConverterFactory($this->moduleConfigurationExtensions);
         foreach ($annotationMessageEndpointConfigurationFinder->findFor(MessageEndpointAnnotation::class, HttpInboundGatewayAnnotation::class) as $mapperRegistration) {
             /** @var HttpInboundGatewayAnnotation $annotation */
             $annotation = $mapperRegistration->getAnnotation();
