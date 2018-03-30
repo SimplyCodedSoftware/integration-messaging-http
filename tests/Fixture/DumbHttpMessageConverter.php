@@ -4,9 +4,14 @@ namespace Fixture;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\AnnotationModuleExtension;
+use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\AnnotationRegistrationService;
+use SimplyCodedSoftware\IntegrationMessaging\Config\ConfigurationVariable;
 use SimplyCodedSoftware\IntegrationMessaging\Config\ConfigurationVariableRetrievingService;
 use SimplyCodedSoftware\IntegrationMessaging\Config\ModuleConfigurationExtension;
+use SimplyCodedSoftware\IntegrationMessaging\Config\RequiredReference;
 use SimplyCodedSoftware\IntegrationMessaging\Http\HttpMessageConverter;
+use SimplyCodedSoftware\IntegrationMessaging\Http\HttpModule;
 use SimplyCodedSoftware\IntegrationMessaging\Http\MediaType;
 use SimplyCodedSoftware\IntegrationMessaging\Message;
 use SimplyCodedSoftware\IntegrationMessaging\Support\MessageBuilder;
@@ -55,10 +60,35 @@ class DumbHttpMessageConverter implements HttpMessageConverter
     /**
      * @inheritDoc
      */
-    public static function create(ConfigurationVariableRetrievingService $configurationVariableRetrievingService): ModuleConfigurationExtension
+    public static function create(AnnotationRegistrationService $annotationRegistrationService): AnnotationModuleExtension
     {
         return self::createNotWritableAndReadable("test");
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function getName(): string
+    {
+        return HttpModule::MODULE_NAME;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getConfigurationVariables(): array
+    {
+        return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getRequiredReferences(): array
+    {
+        return [];
+    }
+
 
     /**
      * @param string $converterName

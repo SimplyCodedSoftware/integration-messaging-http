@@ -28,8 +28,10 @@ class CompositeConverterFactory
 
     /**
      * @param string[] $converterNames
+     *
      * @return HttpMessageConverter
      * @throws ConfigurationException
+     * @throws \SimplyCodedSoftware\IntegrationMessaging\MessagingException
      */
     public function getMessageConvertersWithNames(array $converterNames) : HttpMessageConverter
     {

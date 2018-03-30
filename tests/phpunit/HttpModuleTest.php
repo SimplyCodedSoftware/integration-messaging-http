@@ -10,10 +10,12 @@ use PHPUnit\Framework\TestCase;
 use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\AnnotationConfiguration;
 use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\DoctrineClassMetadataReader;
 use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\FileSystemClassLocator;
+use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\InMemoryAnnotationRegistrationService;
 use SimplyCodedSoftware\IntegrationMessaging\Config\InMemoryConfigurationVariableRetrievingService;
+use SimplyCodedSoftware\IntegrationMessaging\Config\InMemoryModuleMessaging;
 use SimplyCodedSoftware\IntegrationMessaging\Config\MessagingSystemConfiguration;
 use SimplyCodedSoftware\IntegrationMessaging\Handler\InMemoryReferenceSearchService;
-use SimplyCodedSoftware\IntegrationMessaging\Http\AnnotationHttpConfiguration;
+use SimplyCodedSoftware\IntegrationMessaging\Http\HttpModule;
 use SimplyCodedSoftware\IntegrationMessaging\Http\CompositeConverterFactory;
 use SimplyCodedSoftware\IntegrationMessaging\Http\HttpInboundGateway;
 use SimplyCodedSoftware\IntegrationMessaging\Http\HttpInboundGatewayBuilder;
@@ -23,14 +25,11 @@ use SimplyCodedSoftware\IntegrationMessaging\Http\HttpInboundGatewayBuilder;
  * @package Test\SimplyCodedSoftware\IntegrationMessaging\Http
  * @author Dariusz Gafka <dgafka.mail@gmail.com>
  */
-class AnnotationHttpConfigurationTest extends TestCase
+class HttpModuleTest extends TestCase
 {
     public function test_creating_with_default_converters()
     {
-        $configuration = $this->createMessagingSystemConfiguration();
-        $annotationConfiguration = $this->createAnnotationConfiguration("InboundGateway");
-
-        $annotationConfiguration->registerWithin($configuration, InMemoryConfigurationVariableRetrievingService::createEmpty());
+        $annotationConfiguration = $this->prepareConfiguration([HttpInboundGatewayExample::class]);
 
         $this->assertEquals(
             $this->createMessagingSystemConfiguration()
@@ -45,34 +44,29 @@ class AnnotationHttpConfigurationTest extends TestCase
                         ->withRequestMediaType("json")
                         ->witResponseMediaType("json")
                 ),
-            $configuration
+            $annotationConfiguration
         );
     }
 
     /**
-     * @param string $namespacePart
-     * @return AnnotationConfiguration
+     * @param array $annotationClassesToRegister
+     *
+     * @return MessagingSystemConfiguration
      */
-    public function createAnnotationConfiguration(string $namespacePart) : AnnotationConfiguration
+    private function prepareConfiguration(array $annotationClassesToRegister): MessagingSystemConfiguration
     {
-        $annotationReader = new AnnotationReader();
+        $annotationRegistrationService = InMemoryAnnotationRegistrationService::createFrom($annotationClassesToRegister);
+        $cqrsMessagingModule           = HttpModule::create($annotationRegistrationService);
 
-        return AnnotationHttpConfiguration::createAnnotationConfiguration(
+        $extendedConfiguration = $this->createMessagingSystemConfiguration();
+        $cqrsMessagingModule->registerWithin(
+            $extendedConfiguration,
             [],
             InMemoryConfigurationVariableRetrievingService::createEmpty(),
-            new FileSystemClassLocator(
-                $annotationReader,
-                [
-                    __DIR__ . "/../Fixture/Annotation"
-                ],
-                [
-                    "Fixture\Annotation\\" . $namespacePart
-                ]
-            ),
-            new DoctrineClassMetadataReader(
-                $annotationReader
-            )
+            InMemoryReferenceSearchService::createEmpty()
         );
+
+        return $extendedConfiguration;
     }
 
     /**
@@ -80,10 +74,6 @@ class AnnotationHttpConfigurationTest extends TestCase
      */
     protected function createMessagingSystemConfiguration(): MessagingSystemConfiguration
     {
-        return MessagingSystemConfiguration::prepare(
-            DumbModuleConfigurationRetrievingService::createEmpty(),
-            InMemoryConfigurationVariableRetrievingService::createEmpty(),
-            DumbConfigurationObserver::create()
-        );
+        return MessagingSystemConfiguration::prepare(InMemoryModuleMessaging::createEmpty());
     }
 }

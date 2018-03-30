@@ -87,7 +87,7 @@ class HttpSendAndReceiveService implements CustomSendAndReceiveService
      */
     public function prepareForSend(MessageBuilder $messageBuilder, InterfaceToCall $interfaceToCall): MessageBuilder
     {
-        if ($interfaceToCall->doesItNotReturnValue()) {
+        if (!$interfaceToCall->hasReturnValue()) {
             return $messageBuilder;
         }
 

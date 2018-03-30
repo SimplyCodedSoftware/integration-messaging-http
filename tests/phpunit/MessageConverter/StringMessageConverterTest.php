@@ -8,6 +8,7 @@ use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Psr7\ServerRequest;
 use GuzzleHttp\Psr7\Stream;
 use PHPUnit\Framework\TestCase;
+use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\InMemoryAnnotationRegistrationService;
 use SimplyCodedSoftware\IntegrationMessaging\Config\InMemoryConfigurationVariableRetrievingService;
 use SimplyCodedSoftware\IntegrationMessaging\Http\HttpMessageConverter;
 use SimplyCodedSoftware\IntegrationMessaging\Http\MediaType;
@@ -86,7 +87,7 @@ class StringMessageConverterTest extends TestCase
     private function createConverter(): StringMessageConverter
     {
         /** @var StringMessageConverter $converter */
-        $converter = StringMessageConverter::create(InMemoryConfigurationVariableRetrievingService::createEmpty());
+        $converter = StringMessageConverter::create(InMemoryAnnotationRegistrationService::createEmpty());
         return $converter;
     }
 

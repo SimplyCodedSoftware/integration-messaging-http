@@ -4,8 +4,7 @@ namespace SimplyCodedSoftware\IntegrationMessaging\Http;
 
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
-use SimplyCodedSoftware\IntegrationMessaging\Config\ConfigurationVariableRetrievingService;
-use SimplyCodedSoftware\IntegrationMessaging\Config\ModuleConfigurationExtension;
+use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\AnnotationModuleExtension;
 use SimplyCodedSoftware\IntegrationMessaging\Message;
 use SimplyCodedSoftware\IntegrationMessaging\Support\MessageBuilder;
 
@@ -14,7 +13,7 @@ use SimplyCodedSoftware\IntegrationMessaging\Support\MessageBuilder;
  * @package SimplyCodedSoftware\IntegrationMessaging\Http
  * @author Dariusz Gafka <dgafka.mail@gmail.com>
  */
-interface HttpMessageConverter extends ModuleConfigurationExtension
+interface HttpMessageConverter extends AnnotationModuleExtension
 {
     public const CONTENT_TYPE = 'content-type';
     public const ACCEPT_TYPE = 'accept';

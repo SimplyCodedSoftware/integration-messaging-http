@@ -5,6 +5,7 @@ namespace SimplyCodedSoftware\IntegrationMessaging\Http;
 use SimplyCodedSoftware\IntegrationMessaging\Handler\ChannelResolver;
 use SimplyCodedSoftware\IntegrationMessaging\Handler\Gateway\GatewayBuilder;
 use SimplyCodedSoftware\IntegrationMessaging\Handler\Gateway\GatewayProxyBuilder;
+use SimplyCodedSoftware\IntegrationMessaging\Handler\ReferenceSearchService;
 
 /**
  * Class HttpInboundGateway
@@ -166,7 +167,7 @@ class HttpInboundGatewayBuilder implements GatewayBuilder
     /**
      * @inheritDoc
      */
-    public function build(ChannelResolver $channelResolver)
+    public function build(ReferenceSearchService $referenceSearchService, ChannelResolver $channelResolver)
     {
         $httpMessageConverter = $this->compositeConverterFactory->getMessageConvertersWithNames($this->converterNameList);
 
@@ -185,7 +186,7 @@ class HttpInboundGatewayBuilder implements GatewayBuilder
                     $this->requestHeadersToMessageMapper
                 )
             ])
-            ->build($channelResolver);
+            ->build($referenceSearchService, $channelResolver);
     }
 
     public function __toString()

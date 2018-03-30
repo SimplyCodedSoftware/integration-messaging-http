@@ -9,6 +9,7 @@ use Fixture\StubResponseMessageHandler;
 use PHPUnit\Framework\TestCase;
 use SimplyCodedSoftware\IntegrationMessaging\Channel\DirectChannel;
 use SimplyCodedSoftware\IntegrationMessaging\Config\InMemoryChannelResolver;
+use SimplyCodedSoftware\IntegrationMessaging\Handler\InMemoryReferenceSearchService;
 use SimplyCodedSoftware\IntegrationMessaging\Http\CompositeConverterFactory;
 use SimplyCodedSoftware\IntegrationMessaging\Http\HttpInboundGateway;
 use SimplyCodedSoftware\IntegrationMessaging\Http\HttpInboundGatewayBuilder;
@@ -31,7 +32,7 @@ class HttpInboundGatewayBuilderTest extends TestCase
 
         /** @var HttpInboundGateway $gateway */
         $gateway = HttpInboundGatewayBuilder::create(new CompositeConverterFactory([]), "some", HttpInboundGateway::class, "execute", $requestChannelName)
-            ->build($this->createChannelResolver($requestChannelName, $requestChannel));
+            ->build(InMemoryReferenceSearchService::createEmpty(), $this->createChannelResolver($requestChannelName, $requestChannel));
 
         $this->assertEquals(
             $replyData,
@@ -59,7 +60,7 @@ class HttpInboundGatewayBuilderTest extends TestCase
             $requestChannelName
         )
             ->withMessageConverterList([$convertName])
-            ->build($this->createChannelResolver($requestChannelName, $requestChannel));
+            ->build(InMemoryReferenceSearchService::createEmpty(), $this->createChannelResolver($requestChannelName, $requestChannel));
 
         $gatewayResponse = $gateway->execute(ServerRequestMother::createPostWithBody("some"));
 
@@ -99,7 +100,7 @@ class HttpInboundGatewayBuilderTest extends TestCase
             ->withMessageHeadersToResponseMapping([
                 "timestamp" => "when"
             ])
-            ->build($this->createChannelResolver($requestChannelName, $requestChannel));
+            ->build(InMemoryReferenceSearchService::createEmpty(), $this->createChannelResolver($requestChannelName, $requestChannel));
 
         $gatewayResponse = $gateway->execute(
             ServerRequestMother::createPostWithBody("some")
@@ -124,7 +125,7 @@ class HttpInboundGatewayBuilderTest extends TestCase
             "some",HttpInboundGateway::class, "execute",
             $requestChannelName
         )
-            ->build($this->createChannelResolver($requestChannelName, $requestChannel));
+            ->build(InMemoryReferenceSearchService::createEmpty(), $this->createChannelResolver($requestChannelName, $requestChannel));
 
         $gatewayResponse = $gateway->execute(
             ServerRequestMother::createPostWithBody("some")

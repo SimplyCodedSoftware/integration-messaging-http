@@ -5,10 +5,11 @@ namespace SimplyCodedSoftware\IntegrationMessaging\Http\MessageConverter;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use SimplyCodedSoftware\IntegrationMessaging\Annotation\ModuleConfigurationExtensionAnnotation;
-use SimplyCodedSoftware\IntegrationMessaging\Config\ConfigurationVariableRetrievingService;
-use SimplyCodedSoftware\IntegrationMessaging\Config\ModuleConfigurationExtension;
+use SimplyCodedSoftware\IntegrationMessaging\Annotation\ModuleExtensionAnnotation;
+use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\AnnotationModuleExtension;
+use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\AnnotationRegistrationService;
 use SimplyCodedSoftware\IntegrationMessaging\Http\HttpMessageConverter;
+use SimplyCodedSoftware\IntegrationMessaging\Http\HttpModule;
 use SimplyCodedSoftware\IntegrationMessaging\Http\MediaType;
 use SimplyCodedSoftware\IntegrationMessaging\Message;
 use SimplyCodedSoftware\IntegrationMessaging\Support\MessageBuilder;
@@ -17,7 +18,7 @@ use SimplyCodedSoftware\IntegrationMessaging\Support\MessageBuilder;
  * Class BodyToPayloadMessageConverter
  * @package SimplyCodedSoftware\IntegrationMessaging\Http\MessageConverter
  * @author Dariusz Gafka <dgafka.mail@gmail.com>
- * @ModuleConfigurationExtensionAnnotation(moduleName="httpConfiguration")
+ * @ModuleExtensionAnnotation()
  */
 class StringMessageConverter implements HttpMessageConverter
 {
@@ -26,10 +27,26 @@ class StringMessageConverter implements HttpMessageConverter
     /**
      * @inheritDoc
      */
-    public static function create(ConfigurationVariableRetrievingService $configurationVariableRetrievingService): ModuleConfigurationExtension
+    public static function create(AnnotationRegistrationService $annotationRegistrationService): AnnotationModuleExtension
     {
         return new self();
     }
+
+    public function getName(): string
+    {
+        return HttpModule::MODULE_NAME;
+    }
+
+    public function getConfigurationVariables(): array
+    {
+        return [];
+    }
+
+    public function getRequiredReferences(): array
+    {
+        return [];
+    }
+
 
     public static function createWithoutConfigurationVariables() : self
     {
