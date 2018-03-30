@@ -8,8 +8,10 @@ use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\AnnotationModule;
 use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\AnnotationRegistration;
 use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\AnnotationRegistrationService;
 use SimplyCodedSoftware\IntegrationMessaging\Config\Configuration;
+use SimplyCodedSoftware\IntegrationMessaging\Config\ConfigurationObserver;
 use SimplyCodedSoftware\IntegrationMessaging\Config\ConfigurationVariableRetrievingService;
 use SimplyCodedSoftware\IntegrationMessaging\Config\ConfiguredMessagingSystem;
+use SimplyCodedSoftware\IntegrationMessaging\Config\ModuleExtension;
 use SimplyCodedSoftware\IntegrationMessaging\Handler\ReferenceSearchService;
 use SimplyCodedSoftware\IntegrationMessaging\Http\Annotation\HttpInboundGatewayAnnotation;
 use SimplyCodedSoftware\IntegrationMessaging\Http\Annotation\MappedHeaderAnnotation;
@@ -57,6 +59,16 @@ class HttpModule implements AnnotationModule
     public function getRequiredReferences(): array
     {
         return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function preConfigure(array $moduleExtensions, ConfigurationObserver $configurationObserver): void
+    {
+        foreach ($this->httpInboundGatewayRegistrations as $gatewayRegistration) {
+            $configurationObserver->notifyGatewayBuilderWasRegistered($gatewayRegistration->getReferenceName(), $gatewayRegistration->getClassWithAnnotation(), $gatewayRegistration->getClassWithAnnotation());
+        }
     }
 
     public function registerWithin(Configuration $configuration, array $moduleExtensions, ConfigurationVariableRetrievingService $configurationVariableRetrievingService, ReferenceSearchService $referenceSearchService): void

@@ -24,7 +24,7 @@
     },
     "require": {
         "php": ">=7.1.0",
-        "simplycodedsoftware/integration-messaging": "*",
+        "simplycodedsoftware/integration-messaging": "dev-master",
         "psr/http-message": "^1.0.1",
         "guzzlehttp/psr7": "^1.4"
     },
