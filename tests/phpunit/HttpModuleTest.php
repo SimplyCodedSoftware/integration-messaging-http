@@ -14,6 +14,7 @@ use SimplyCodedSoftware\IntegrationMessaging\Config\Annotation\InMemoryAnnotatio
 use SimplyCodedSoftware\IntegrationMessaging\Config\InMemoryConfigurationVariableRetrievingService;
 use SimplyCodedSoftware\IntegrationMessaging\Config\InMemoryModuleMessaging;
 use SimplyCodedSoftware\IntegrationMessaging\Config\MessagingSystemConfiguration;
+use SimplyCodedSoftware\IntegrationMessaging\Config\NullObserver;
 use SimplyCodedSoftware\IntegrationMessaging\Handler\InMemoryReferenceSearchService;
 use SimplyCodedSoftware\IntegrationMessaging\Http\HttpModule;
 use SimplyCodedSoftware\IntegrationMessaging\Http\CompositeConverterFactory;
@@ -59,11 +60,10 @@ class HttpModuleTest extends TestCase
         $cqrsMessagingModule           = HttpModule::create($annotationRegistrationService);
 
         $extendedConfiguration = $this->createMessagingSystemConfiguration();
-        $cqrsMessagingModule->registerWithin(
+        $cqrsMessagingModule->prepare(
             $extendedConfiguration,
             [],
-            InMemoryConfigurationVariableRetrievingService::createEmpty(),
-            InMemoryReferenceSearchService::createEmpty()
+            NullObserver::create()
         );
 
         return $extendedConfiguration;

@@ -64,14 +64,7 @@ class HttpModule implements AnnotationModule
     /**
      * @inheritDoc
      */
-    public function preConfigure(array $moduleExtensions, ConfigurationObserver $configurationObserver): void
-    {
-        foreach ($this->httpInboundGatewayRegistrations as $gatewayRegistration) {
-            $configurationObserver->notifyGatewayBuilderWasRegistered($gatewayRegistration->getReferenceName(), $gatewayRegistration->getClassWithAnnotation(), $gatewayRegistration->getClassWithAnnotation());
-        }
-    }
-
-    public function registerWithin(Configuration $configuration, array $moduleExtensions, ConfigurationVariableRetrievingService $configurationVariableRetrievingService, ReferenceSearchService $referenceSearchService): void
+    public function prepare(Configuration $configuration, array $moduleExtensions, ConfigurationObserver $configurationObserver): void
     {
         $compositeFactory = new CompositeConverterFactory($moduleExtensions);
 
@@ -104,6 +97,14 @@ class HttpModule implements AnnotationModule
                     ->withMessageHeadersToResponseMapping($responseMappers)
             );
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function configure(Configuration $configuration, array $moduleExtensions, ConfigurationVariableRetrievingService $configurationVariableRetrievingService, ReferenceSearchService $referenceSearchService): void
+    {
+        return;
     }
 
     /**
