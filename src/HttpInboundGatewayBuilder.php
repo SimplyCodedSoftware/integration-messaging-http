@@ -159,6 +159,14 @@ class HttpInboundGatewayBuilder implements GatewayBuilder
     /**
      * @inheritDoc
      */
+    public function getRequiredReferences(): array
+    {
+        return [];
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getInterfaceName(): string
     {
         return $this->className;
