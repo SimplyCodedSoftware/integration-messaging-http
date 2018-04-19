@@ -11,6 +11,7 @@ use SimplyCodedSoftware\IntegrationMessaging\Handler\InterfaceToCall;
 use SimplyCodedSoftware\IntegrationMessaging\Message;
 use SimplyCodedSoftware\IntegrationMessaging\MessageChannel;
 use SimplyCodedSoftware\IntegrationMessaging\PollableChannel;
+use SimplyCodedSoftware\IntegrationMessaging\SubscribableChannel;
 use SimplyCodedSoftware\IntegrationMessaging\Support\MessageBuilder;
 
 /**
@@ -75,7 +76,7 @@ class HttpSendAndReceiveService implements CustomSendAndReceiveService
     /**
      * @inheritDoc
      */
-    public function setSendAndReceive(DirectChannel $requestChannel, ?PollableChannel $replyChannel, ?MessageChannel $errorChannel): void
+    public function setSendAndReceive(SubscribableChannel $requestChannel, ?PollableChannel $replyChannel, ?MessageChannel $errorChannel): void
     {
         $this->requestChannel = $requestChannel;
         $this->replyChannel = $replyChannel ? $replyChannel : $this->replyChannel;
