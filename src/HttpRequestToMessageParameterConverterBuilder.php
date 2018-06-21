@@ -85,7 +85,12 @@ class HttpRequestToMessageParameterConverterBuilder implements ParameterToMessag
                 $requestMessageBuilder = $this->httpMessageConverter->read($request, $this->requestMediaType);
 
                 foreach ($this->requestHeadersToMessageMapper as $requestHeader => $messageHeader) {
-                    $requestMessageBuilder = $requestMessageBuilder->setHeader($messageHeader, $request->getHeader($requestHeader)[0]);
+                    $header                = $request->getHeader($requestHeader);
+                    if (!$header) {
+                        continue;
+                    }
+
+                    $requestMessageBuilder = $requestMessageBuilder->setHeader($messageHeader, $header[0]);
                 }
 
                 return $requestMessageBuilder;
